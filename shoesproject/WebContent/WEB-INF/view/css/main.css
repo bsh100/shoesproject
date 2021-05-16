@@ -1,0 +1,173 @@
+ *:not(input,button){
+  margin: 0px;
+  padding: 0px; 
+  list-style: none;
+  text-decoration: none;
+  text-align: center;
+ 	}
+a{
+	color: gray;
+}
+ul{
+display: flex;
+color: white;
+}
+ul > li{
+	color: white;
+  margin-right: 20px;
+}
+.header{
+  margin: auto;
+  width:1280px;
+  height:200px;
+  background-color: black;
+  display: flex;
+  flex-wrap: wrap;
+  color: white;
+  font-weight: bolder;
+ }
+.logo{
+	color: white;
+    width:320px;
+    height: 150px;
+    background-color: black;
+    line-height: 150px;
+}
+.nav{
+	color: white;
+  background-color: black;
+  width: 960px;
+  height: 36px;
+  display: flex;
+  justify-content: flex-end;
+  line-height: 36px;
+}
+.icon_bt{
+	color: white;
+  width: 960px;
+  margin-top: -75px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.icon_left{
+	color: white;
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+  font-style: inherit;
+}
+.cart, .mypage, .interested{
+  margin-left: 10px;
+  color: white;
+}
+.category{
+	color: white;
+  width: 1280px;
+  height: 50px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+}
+.all, .men{
+	color: white;
+  width: 100px;
+  height: 36px;
+  margin-left: 10px;
+  line-height: 36px;
+  cursor: pointer;
+}
+.issue{
+	color: white;
+  width: 1280px;
+  height: 320px;
+  background-color: black;
+  margin: auto;
+  margin-top: 50px;
+  line-height: 320px;
+}
+
+
+/* 메인 슬라이드 */
+
+
+
+
+/* 베스트 상품 리스트 */
+
+.best{
+	color: white;
+  width: 1280px;
+  height: 350px;
+  background-color: black;
+  margin: auto;
+  margin-top: 50px;
+  display: flex;
+}
+.best>ul>li{
+	color: white;
+  margin: 30px 10px 0px 10px;
+  width: 236px;
+  height: 290px;
+  background-color: black;
+}
+
+.img_best{
+	color: white;
+  background-color: white;
+  width: 236px;
+  height: 210px;
+}
+.product_name{
+	color: white;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-bottom: 1px solid gray;
+  font-weight: bolder;
+  font-size: 14px;
+  text-align: left;
+}
+.product_info{
+	color: white;
+  margin-left: 5px;
+  display: flex;
+  font-size: 11px;
+  flex-wrap: wrap;
+}
+.colorsize{
+	color: white;
+  width:236px;
+  height: 15px;
+  display: flex;
+}
+.color_count{
+	color: white;
+  margin-right: 5px;
+}
+.size{
+	color: white;
+  margin-left: 5px;
+}
+.review_count{
+	color: white;
+  margin-right: 5px;
+  margin-top: -15px;
+  display: flex;
+  font-size: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.price{
+  font-size: 15px;
+}
+#color_black{
+	color:black !important;
+}
+#color_white{
+	color:white !important;
+}
+i{
+	color:white;
+}

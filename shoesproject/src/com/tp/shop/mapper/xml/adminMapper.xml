@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.tp.shop.mapper.java.AdminMapper">
+  	<!-- 상품등록 -->
+  	<insert id="insertProduct" parameterType="Product">
+  		insert into product(prod_category,prod_name,prod_price,prod_size,prod_color,prod_stock,prod_description,picture_url)
+  		values(#{prodCategory},#{prodName},#{prodPrice},#{prodSize},#{prodColor},#{prodStock},#{prodDescription},#{pictureUrl})
+  	</insert>
+  	<!-- 상품리스트 -->	
+  	<select id="listProduct" resultType="Product">
+  		select * from product 
+  		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="searchType=='Name' and keyword != null and keyword != '' ">
+				and prod_name like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType=='Category' and keyword != null and keyword != '' ">
+				and prod_category like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType=='Price' and keyword != null and keyword != '' ">
+				and prod_price like CONCAT('%', #{keyword}, '%')
+			</if>	
+		</trim>
+  		GROUP by prod_name 
+  		order by prod_no desc limit #{startList},#{listSize}
+  	</select>	
+  	<!-- 카운트 -->
+  	<select id="listCount" resultType="integer">
+  	select count(atable.prod_no) from 
+  	(SELECT * FROM product GROUP BY prod_name) atable <!-- 그룹바이 테이블 수량 카운트 -->
+  	<trim prefix="WHERE" prefixOverrides="AND|OR">
+		<if test="keyword != null and keyword != '' ">
+			<if test="searchType=='Name'">
+				AND prod_name like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType=='Category'">
+				AND prod_category like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType=='Price'">
+				AND prod_price like CONCAT('%', #{keyword}, '%')
+			</if>
+     	 </if>
+	</trim>
+  	</select>
+  	
+  	<!-- 상품상세보기 -->
+  	<select id="selectByName" resultType="Product">
+  		select * from product
+  		where prod_name=#{prodName} GROUP BY prod_name
+  	</select>
+  	
+  	<!-- 상품컬러, 사이즈 가져오기 -->
+  	<select id="productColorSize" resultType="Product">
+  		select prod_color 
+  		from product where prod_name =#{prodName} group by prod_color
+  	</select>
+  	
+  	<!-- 장바구니로 넘겨줄 no 값 가져오기 -->
+  	<select id="productNo" resultType="Product">
+  		select prod_no
+  		from product 
+  		where prod_name=#{prodName} and prod_color=#{prodColor} and prod_size=#{prodSize} 
+  	</select>
+  	
+  	<!-- 상품수정 리스트 -->
+  	<select id="updateList" resultType="Product">
+  		select prod_no,prod_category,prod_name,prod_price,prod_size,
+  		prod_color,prod_stock,prod_description,picture_url
+  		from product 
+  		where prod_name=#{prodName}
+  	</select>
+
+  	<!-- 상품 수정에 필요한 전체 정보 no로 가져오기 -->
+  	<select id="selectByNo" resultType="Product">
+  		select * from product
+  		where prod_no=#{prodNo}
+  	</select>
+
+  	<!-- 상품수정  -->
+  	<update id="updateProduct" parameterType="Product">
+  		update product set prod_category=#{prodCategory}, prod_name=#{prodName}, prod_price=#{prodPrice},
+  		prod_size=#{prodSize}, prod_color=#{prodColor}, prod_stock=#{prodStock}, prod_description=#{prodDescription}, picture_url=#{pictureUrl}
+ 	 	where prod_no=#{prodNo}
+  	</update>
+  	
+  	<!-- 상품삭제  -->
+  	<delete id="deleteProduct" parameterType="Product">
+  		delete from product where prod_no=#{prodNo}
+  	</delete>
+  	
+  	<!-- 상품 사이즈 조회 -->
+  	<select id="getProdSizeByColor" parameterType="HashMap" resultType="Integer">
+  	select prod_size from product where prod_name=#{prodName} and prod_color=#{color}
+  	</select>
+  	
+  	<!-- 장바구니 추가에 필요한 id 가져오기 -->
+  	<select id="getProdNo" parameterType="String" resultType="Integer">
+  	select prod_no from product 
+  	where prod_name=#{name} and prod_color=#{color} and prod_size=#{size}
+  	</select>
+  	
+  	
+  </mapper>
+  
+ 
+  
+  
+  
+  <!-- 최상위 카테고리 값이 널일시에 카테고리ref코드가 널인 카테고리에 종속관계가된다 -->
+  	<!-- <select id="categoryAll" resultType="Category2">
+  		SELECT
+        CONCAT(A.group_id,  A.cate_lev,  A.cate_detail_lev) AS n_key, concat으로 n_key로 만들어줌
+        A.cate_name,
+        CONCAT(repeat(' ',A.cate_parent_lev * 3), A.cate_detail_name) as cate_dedailname, 
+        레벨*3으로 들여쓰기를 해준다
+        CASE A.cate_parent_lev
+			WHEN 0 THEN C.cate_detail_name parent레벨이 0일때 디테일 카테고리 
+			WHEN 1 THEN CONCAT(B.cate_detail_name,' > ', A.cate_detail_name) 
+			WHEN 2 THEN CONCAT(C.cate_detail_name, ' > ', B.cate_detail_name,' > ', A.cate_detail_name)
+		END as navigator
+FROM category A LEFT JOIN category B
+	ON A.cate_parent_lev = B.cate_lev
+	AND A.cate_parent_detail_lev = B.cate_detail_lev
+LEFT JOIN category C 
+	ON A.group_id = C.group_iD
+WHERE A.cate_id > 0
+	AND C.cate_id = ( SELECT cate_id FROM category sub2 where  cate_id > 0 and cate_lev = 1)
+ORDER BY navigator
+  	</select> -->	

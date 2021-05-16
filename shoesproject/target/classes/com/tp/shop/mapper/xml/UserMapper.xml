@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tp.shop.mapper.java.UserMapper">
+
+	<!-- mybatisConfig 파일에서 com.tp.shop.dto.UserDto객체 타입을 User Alias시킴 -->
+
+
+	<select id="selectUserById" parameterType="String"
+		resultType="User">
+		select * from user where user_id=#{userId}
+	</select>
+
+	<!-- 회원가입하면 이거 실행됨. -->
+	<insert parameterType="User" id="insertUser"
+		keyProperty="userNo" useGeneratedKeys="true">
+		insert into
+		user(user_no,user_type,user_id,password,name,address,phone,email)
+		values(0,#{userType},#{userId},#{password},#{name},#{address},#{phone},#{email})
+	</insert>
+
+	<update id="updateUserAddress" parameterType="String">
+		update user set address = #{address} where user_id = #{userId}
+	</update>
+
+	<update id="updateUserPW" parameterType="HashMap">
+		update user set password=#{password} where user_id=#{userId}
+	</update>
+
+	<select id="getOrderProdListByUserId" parameterType="String" resultType="com.tp.shop.dto.OrderProdDto">
+		select picture_url,prod_name,prod_size,prod_color,o.reg_date,o.order_no,op.count,prod_price
+		 from orderdb o join order_prod op on o.order_no = op.order_no
+		 join product p on op.prod_no = p.prod_no
+		 where user_id=#{userId} order by reg_date desc;
+	</select>
+
+</mapper>

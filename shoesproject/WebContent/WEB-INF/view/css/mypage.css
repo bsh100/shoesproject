@@ -1,0 +1,59 @@
+.middle{
+  width: 1280px;
+  height: 100%;
+  background-color: white;
+  margin: auto;
+  display: flex;
+  justify-content: flex-start;
+}
+#aside{
+	margin-top:10px;
+  width: 320px;
+  height: 800px;
+  background-color: black;
+}
+.middle > #aside > ul{
+  width: 320px;
+  height: 800px;
+  display: block;
+  list-style: none;
+  font-size: 15px;
+}
+.middle > #aside > ul > li{
+  margin-top: 5px;
+}
+#impact{
+  margin-top: 20px;
+  margin-left: 10px;
+  width: 130px;
+  font-size: 20px;
+  background-color: black;
+  border-bottom: 1px solid black;
+}
+.a{
+  width: 960px;
+  height: 800px;
+  background-color: lightgray;
+}
+.a > .b{
+  font-size: 45px;
+  text-align: left;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+.root{
+  margin-top: 20px;
+  margin-left: 20px;
+  text-align: left;
+}
+.user_info{
+  border: 1px solid black;
+  width: 950px;
+  height: 500px;
+}
+.user_update_form{
+  text-align: left;
+}
+label{
+  margin: 10px;
+}

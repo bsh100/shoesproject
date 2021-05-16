@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.tp.shop.mapper.java.CartMapper">
+	  
+	  <select id="selectCart" resultType="cart" parameterType="String">
+	  		SELECT  
+	  			user_id
+	  			,cart_no
+	  			,cart.prod_no
+	  			,prod_category
+	  			,prod_name
+	  			,prod_price
+	  			,prod_size
+	  			,prod_color
+	  			,prod_stock 
+	  			,picture_url
+			FROM 
+				product 
+			JOIN 
+				cart 
+			ON 
+				cart.prod_no = product.prod_no 
+			WHERE 
+				user_id=#{userId}
+			GROUP BY cart.prod_no	
+		
+	  </select>
+	  
+	  <delete id="deleteCartProd" parameterType="HashMap">
+	  		delete from cart where prod_no=#{prodNo} and user_id=#{userId}
+	  </delete>
+	  
+	  
+	  <select id="getCount" parameterType="HashMap" resultType="Integer">
+	  select count(*) from cart where prod_no=#{prodNo} and user_id=#{userId} group by prod_no;
+	  </select>
+	  
+	  <select id="getProdNo" parameterType="HashMap" resultType="Integer">
+	  select prod_no from product where prod_name=#{prodName} and prod_color=#{prodColor} and prod_size=#{prodSize}
+	  </select>
+	  
+	  <insert id="insertCartProd" parameterType="HashMap">
+	  insert into cart(cart_no, prod_no, user_id) values(0,#{prodNo},#{userId})
+	  </insert>
+	  
+	  <delete id="deleteProdCart" parameterType="HashMap">
+	  delete from cart where prod_no=#{prodNo} and user_id=#{userId} order by cart_no desc limit 1;
+	  </delete>
+	  
+	  <select id="selectProdNoByCartNo" parameterType="String" resultType="Integer">
+	 	select prod_no from cart where cart_no = #{cartNo}
+	  </select>
+	  
+	  <insert id="insertCart" parameterType="cart">
+	  insert into cart(cart_no, prod_no, user_id) values(0,#{prodNo},#{userId})
+	  </insert>
+	  
+	  <delete id="afterOrderDeleteCart" >
+	  delete from cart where user_id=#{userId}
+	  </delete>
+	 
+  </mapper>

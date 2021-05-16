@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qnaMapper">
+	<select resultType="qna" id="selectAll">
+		select * from qna order by ranking asc, team desc
+	</select>
+
+	<select resultType="qna" id="select" parameterType="int">
+	    select * from
+		qna where qna_no=#{qnaNo}
+	</select>
+	
+	<insert id="insert" parameterType="qna">
+	insert into qna(qna_title,qna_writer,qna_content)
+	 values(#{qnaTitle},#{qnaWriter},#{qnaContent})
+	</insert>
+	
+	<select id="selectId" parameterType="qna" resultType="int">
+	select qna_no from qna where qna_title=#{qnaTitle} and qna_writer=#{qnaWriter} and
+		qna_content=#{qnaContent}
+	</select>
+	
+	<update id="update_team" parameterType="int">
+	update qna set team=#{qnaNo}
+	where qna_no=#{qnaNo}
+	</update>
+	
+	<update id="update" parameterType="qna">
+	update qna set qna_title=#{qnaTitle}, qna_content=#{qnaContent}
+	where qna_no=#{qnaNo}
+	</update>
+	
+	<delete id="delete" parameterType="qna">
+	delete from qna where team = #{team}
+	</delete>
+	
+	<insert id="reply" parameterType="qna">
+	insert into qna(qna_title,qna_writer,qna_content, team, ranking, depth)
+	values( #{qnaTitle}, #{qnaWriter}, #{qnaContent}, #{team},  #{ranking}+1, #{depth}+1)
+	</insert>
+
+</mapper>

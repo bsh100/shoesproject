@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.tp.shop.mapper.java.MainMapper">
+  	
+  	<select id="getBestProdList" resultType="Product">
+  	select * from order_prod op 
+  	join product p on op.prod_no = p.prod_no 
+  	group by p.prod_name 
+  	order by sum(count) desc limit 5;
+  	</select>
+
+	<select id="getCate" resultType="String">
+	select prod_category from product group by prod_category;
+	</select>
+  	
+  	
+  </mapper>
